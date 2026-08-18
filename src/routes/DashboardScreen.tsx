@@ -18,7 +18,7 @@ import { useAuth } from '../context/AuthContext';
 
 export function DashboardScreen() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const { data: config } = useConfig();
   const { data: myChallenges, isLoading, isError } = useMyChallenges();
 
@@ -44,19 +44,14 @@ export function DashboardScreen() {
 
   return (
     <Container maxWidth="sm" sx={{ py: 6 }}>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={4}>
-        <Box>
-          <Typography variant="h5" fontWeight={800}>
-            Hey {user?.name.split(' ')[0]}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Keep the streak alive.
-          </Typography>
-        </Box>
-        <Button size="small" onClick={logout}>
-          Log out
-        </Button>
-      </Stack>
+      <Box mb={4}>
+        <Typography variant="h5" fontWeight={800}>
+          Hey {user?.name.split(' ')[0]}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Keep the streak alive.
+        </Typography>
+      </Box>
 
       <Stack spacing={2}>
         {myChallenges.map((uc) => {
