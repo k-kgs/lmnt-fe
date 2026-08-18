@@ -58,16 +58,26 @@ export function OnboardingScreen() {
     }
   }
 
+  // The goal input is driven by the vertical's own schema (same source the
+  // check-in form reads) rather than a generic "daily target" — a bare
+  // number makes no sense for a vertical without a numeric field (Fitness/
+  // Gym logs a workout + exercise list, not a count) and needs the right
+  // unit/label for one that has it (Weight's target is a goal weight in kg,
+  // not a "daily" quantity).
+  const goalField = selectedVertical?.input_schema.find((f) => f.type === 'number');
+
   async function handleSetGoal() {
     if (!selectedVertical) return;
     const templateChallenge = data!.challenges.find(
       (c) => c.vertical_id === selectedVertical.id && c.is_template,
     );
     if (!templateChallenge) return;
+    const customGoal =
+      goalField && goalTarget !== '' ? { [goalField.key]: goalTarget } : undefined;
     try {
       const uc = await joinChallenge.mutateAsync({
         challengeId: templateChallenge.id,
-        customGoal: goalTarget === '' ? undefined : { target: goalTarget },
+        customGoal,
       });
       navigate(`/checkin/${uc.id}`);
     } catch {
@@ -194,13 +204,19 @@ export function OnboardingScreen() {
             Vertical: <strong>{selectedVertical.label}</strong>
           </Typography>
           {joinChallenge.isError && <Alert severity="error">Couldn't set your goal — try again.</Alert>}
-          <TextField
-            label="Daily target (optional)"
-            type="number"
-            value={goalTarget}
-            onChange={(e) => setGoalTarget(e.target.value === '' ? '' : Number(e.target.value))}
-            fullWidth
-          />
+          {goalField ? (
+            <TextField
+              label={`Goal ${goalField.label.toLowerCase()}${goalField.unit ? ` (${goalField.unit})` : ''} — optional`}
+              type="number"
+              value={goalTarget}
+              onChange={(e) => setGoalTarget(e.target.value === '' ? '' : Number(e.target.value))}
+              fullWidth
+            />
+          ) : (
+            <Typography variant="body2" color="text.secondary">
+              No target needed for {selectedVertical.label.toLowerCase()} — just log your check-ins as you go.
+            </Typography>
+          )}
           <Button
             variant="contained"
             size="large"
