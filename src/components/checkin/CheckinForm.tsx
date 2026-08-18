@@ -39,7 +39,6 @@ export function CheckinForm({ schema, onSubmit, submitting }: Props) {
 
   function isComplete() {
     return schema.every((f) => {
-      if (f.type === 'photo') return true; // stubbed field, not required to submit
       const v = values[f.key];
       if (f.type === 'exercise_list') return Array.isArray(v) && v.length > 0 && v[0].name !== '';
       return v !== '' && v !== undefined;
@@ -49,7 +48,6 @@ export function CheckinForm({ schema, onSubmit, submitting }: Props) {
   function handleSubmit() {
     const payload: Record<string, unknown> = {};
     for (const field of schema) {
-      if (field.type === 'photo') continue; // not submittable yet, see PhotoField
       payload[field.key] = values[field.key];
     }
     onSubmit(payload);
@@ -96,7 +94,14 @@ export function CheckinForm({ schema, onSubmit, submitting }: Props) {
               />
             );
           case 'photo':
-            return <PhotoField key={field.key} field={field} />;
+            return (
+              <PhotoField
+                key={field.key}
+                field={field}
+                value={values[field.key] as string}
+                onChange={(v) => setValue(field.key, v)}
+              />
+            );
           default:
             return null;
         }

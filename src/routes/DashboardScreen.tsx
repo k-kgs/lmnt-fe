@@ -91,6 +91,16 @@ export function DashboardScreen() {
                   )}
                 </CardContent>
               </CardActionArea>
+              <Button
+                size="small"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/challenge/${uc.id}`);
+                }}
+                sx={{ ml: 1, mb: 1 }}
+              >
+                View leaderboard
+              </Button>
             </Card>
           );
         })}

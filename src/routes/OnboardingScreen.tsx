@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import { useConfig, type Challenge, type Vertical } from '../api/config';
 import { useJoinChallenge } from '../api/challenges';
-import { hasPhotoField } from '../lib/verticals';
 
 type Mode = 'choose' | 'join' | 'goal';
 
@@ -44,10 +43,10 @@ export function OnboardingScreen() {
     );
   }
 
-  const joinableVerticals = data.verticals.filter((v) => !hasPhotoField(v));
-  const joinableChallenges = data.challenges.filter((c) =>
-    joinableVerticals.some((v) => v.id === c.vertical_id),
-  );
+  // Diet's photo field is fully supported now (lmnt-be ships
+  // /api/uploads/request) — every vertical config returns is joinable.
+  const joinableVerticals = data.verticals;
+  const joinableChallenges = data.challenges;
 
   async function handleJoin(challenge: Challenge) {
     try {
