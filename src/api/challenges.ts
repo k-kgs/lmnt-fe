@@ -25,13 +25,26 @@ export function useMyChallenges() {
   });
 }
 
+// POST /challenges/{id}/join returns the raw inserted row (repository.UserChallenge),
+// a genuinely different shape from ListUserChallengesForUser's joined/enriched
+// UserChallenge above — verified live, it does NOT include vertical_key,
+// challenge_title, or streak fields, only what was actually inserted.
+export interface JoinedChallenge {
+  id: string;
+  user_id: string;
+  challenge_id: string;
+  custom_goal: unknown;
+  status: string;
+  joined_at: string;
+}
+
 interface JoinChallengeInput {
   challengeId: string;
   customGoal?: Record<string, unknown>;
 }
 
-function joinChallenge({ challengeId, customGoal }: JoinChallengeInput): Promise<UserChallenge> {
-  return apiFetch<UserChallenge>(`/api/challenges/${challengeId}/join`, {
+function joinChallenge({ challengeId, customGoal }: JoinChallengeInput): Promise<JoinedChallenge> {
+  return apiFetch<JoinedChallenge>(`/api/challenges/${challengeId}/join`, {
     method: 'POST',
     body: customGoal ? JSON.stringify({ custom_goal: customGoal }) : undefined,
   });

@@ -13,6 +13,7 @@ import { useConfig } from '../api/config';
 import { useMyChallenges } from '../api/challenges';
 import { useCreateCheckin, type CreateCheckinResult } from '../api/checkins';
 import { CheckinForm } from '../components/checkin/CheckinForm';
+import { posthog } from '../lib/posthog';
 import { useState } from 'react';
 
 export function CheckinScreen() {
@@ -49,6 +50,10 @@ export function CheckinScreen() {
     if (!userChallengeId) return;
     try {
       const res = await createCheckin.mutateAsync({ userChallengeId, metricData: values });
+      posthog.capture('checkin_completed', {
+        vertical: vertical?.key,
+        streak_after: res.CurrentStreak,
+      });
       setResult(res);
     } catch {
       // error surfaced via createCheckin.isError below

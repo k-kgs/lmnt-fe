@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { useConfig, type Challenge, type Vertical } from '../api/config';
 import { useJoinChallenge } from '../api/challenges';
+import { posthog } from '../lib/posthog';
 
 type Mode = 'choose' | 'join' | 'goal';
 
@@ -51,6 +52,7 @@ export function OnboardingScreen() {
   async function handleJoin(challenge: Challenge) {
     try {
       const uc = await joinChallenge.mutateAsync({ challengeId: challenge.id });
+      posthog.capture('challenge_joined', { challenge_id: challenge.id, vertical: challenge.vertical_key });
       navigate(`/checkin/${uc.id}`);
     } catch {
       // surfaced via joinChallenge.isError below
@@ -77,6 +79,11 @@ export function OnboardingScreen() {
       const uc = await joinChallenge.mutateAsync({
         challengeId: templateChallenge.id,
         customGoal,
+      });
+      posthog.capture('challenge_joined', {
+        challenge_id: templateChallenge.id,
+        vertical: selectedVertical.key,
+        custom_goal: Boolean(customGoal),
       });
       navigate(`/checkin/${uc.id}`);
     } catch {

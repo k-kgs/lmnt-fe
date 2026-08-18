@@ -16,6 +16,7 @@ import {
 import { useConfig, type RedemptionItem } from '../api/config';
 import { useWallet } from '../api/wallet';
 import { useRedeem } from '../api/redemptions';
+import { posthog } from '../lib/posthog';
 
 const SLOT_OPTIONS = ['Tomorrow, 10:00 AM', 'Tomorrow, 4:00 PM', 'In 2 days, 6:00 PM'];
 
@@ -53,10 +54,15 @@ export function RedeemHub() {
   async function handleConfirmRedeem(item: RedemptionItem, extra?: { slot?: string }) {
     try {
       const result = await redeem.mutateAsync(item.id);
+      posthog.capture('redemption_made', {
+        redemption_item_id: item.id,
+        type: item.type,
+        coin_cost: item.coin_cost,
+        slot: extra?.slot,
+      });
       setStep({ name: 'done', item, code: result.CodeOrSlot });
     } catch {
-      // surfaced via redeem.isError below; extra kept for future slot logging
-      void extra;
+      // surfaced via redeem.isError below
     }
   }
 
