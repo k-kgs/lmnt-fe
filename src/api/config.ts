@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-
-const API_URL = import.meta.env.VITE_API_URL as string;
+import { apiFetch } from './client';
 
 export interface Vertical {
   id: string;
@@ -41,12 +40,8 @@ export interface KayamConfig {
   redemption_items: RedemptionItem[];
 }
 
-async function fetchConfig(): Promise<KayamConfig> {
-  const res = await fetch(`${API_URL}/api/config`);
-  if (!res.ok) {
-    throw new Error(`Failed to load config: ${res.status}`);
-  }
-  return res.json();
+function fetchConfig(): Promise<KayamConfig> {
+  return apiFetch<KayamConfig>('/api/config');
 }
 
 export function useConfig() {
