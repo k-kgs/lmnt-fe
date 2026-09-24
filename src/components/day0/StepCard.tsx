@@ -28,7 +28,7 @@ export function StepCard({
       variant="outlined"
       sx={{
         p: { xs: 2.75, sm: 3.25 },
-        borderRadius: 5,
+        borderRadius: '24px',
         borderColor: day0Tokens.mist,
         bgcolor: day0Tokens.surface,
       }}
@@ -71,7 +71,11 @@ export function StepCard({
             </Button>
           )}
           {onBack && (
-            <Button variant="text" onClick={onBack} sx={{ color: day0Tokens.inkSoft, fontSize: 13, fontWeight: 600 }}>
+            <Button
+              variant="text"
+              onClick={onBack}
+              sx={{ color: day0Tokens.inkSoft, fontSize: 15, fontWeight: 700, py: 1.1 }}
+            >
               ← Back
             </Button>
           )}

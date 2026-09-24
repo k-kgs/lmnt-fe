@@ -56,28 +56,36 @@ export function SurveyScreen() {
 
       {screen === 'branchPositive' && (
         <ChipQuestionStep
+          multi
+          max={3}
           eyebrow="Good to know"
           question="What's kept you consistent?"
           options={POSITIVE_OPTIONS}
-          selected={answers.positiveReason}
-          onSelect={(v) => {
-            setAnswers({ positiveReason: v });
-            setTimeout(() => goTo('rewardKano'), 240);
+          selected={answers.positiveReasons || []}
+          onToggle={(v) => {
+            const current = answers.positiveReasons || [];
+            const next = current.includes(v) ? current.filter((r) => r !== v) : [...current, v];
+            setAnswers({ positiveReasons: next });
           }}
+          onNext={() => goTo('rewardKano')}
           onBack={goBack}
         />
       )}
 
       {screen === 'branchNeutral' && (
         <ChipQuestionStep
+          multi
+          max={3}
           eyebrow="Good to know"
           question={'What would help you go from “okay” to elite?'}
           options={NEUTRAL_OPTIONS}
-          selected={answers.neutralReason}
-          onSelect={(v) => {
-            setAnswers({ neutralReason: v });
-            setTimeout(() => goTo('rewardKano'), 240);
+          selected={answers.neutralReasons || []}
+          onToggle={(v) => {
+            const current = answers.neutralReasons || [];
+            const next = current.includes(v) ? current.filter((r) => r !== v) : [...current, v];
+            setAnswers({ neutralReasons: next });
           }}
+          onNext={() => goTo('rewardKano')}
           onBack={goBack}
         />
       )}

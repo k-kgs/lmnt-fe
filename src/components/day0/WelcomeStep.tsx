@@ -32,7 +32,7 @@ export function WelcomeStep({ onNext }: { onNext: () => void }) {
           how you build habits.
         </Typography>
         <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 14, lineHeight: 1.55, mb: 0.5 }}>
-          day0 verifies your consistency and rewards it with real coins.
+          Day0 verifies your consistency and rewards it with real coins.
         </Typography>
         <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 14, lineHeight: 1.55 }}>
           Nothing here is a test — just help us build the right thing, before we build it.
@@ -41,7 +41,7 @@ export function WelcomeStep({ onNext }: { onNext: () => void }) {
           {[
             { icon: 'lock', label: 'Anonymous' },
             { icon: 'clock', label: '~2 min' },
-            { icon: 'gift', label: 'Founding Member perk' },
+            { icon: 'gift', label: 'New Member perk' },
           ].map((pill) => (
             <Stack
               key={pill.label}

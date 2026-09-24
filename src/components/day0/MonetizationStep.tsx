@@ -22,7 +22,7 @@ export function MonetizationStep({
   return (
     <StepCard
       eyebrow="Being honest about money"
-      question="If day0 had a premium tier with more challenges and coaching, how would you want to access it?"
+      question="If Day0 had a premium tier with more challenges and coaching, how would you want to access it?"
       onBack={onBack}
     >
       <Stack gap={1.25} mt={2.25}>

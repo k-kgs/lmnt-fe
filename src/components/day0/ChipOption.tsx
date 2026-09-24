@@ -14,13 +14,15 @@ export function ChipRow({
   onSelect,
 }: {
   options: ChipDef[];
-  selected?: string;
+  selected?: string | string[];
   onSelect: (value: string) => void;
 }) {
+  const isChipSelected = (value: string) => (Array.isArray(selected) ? selected.includes(value) : selected === value);
+
   return (
     <Stack direction="row" flexWrap="wrap" gap={1} mt={1.75}>
       {options.map((opt) => {
-        const isSelected = selected === opt.value;
+        const isSelected = isChipSelected(opt.value);
         return (
           <Chip
             key={opt.value}

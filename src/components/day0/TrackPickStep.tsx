@@ -44,7 +44,7 @@ export function TrackPickStep({
                 gap: 1,
                 py: 2.5,
                 px: 1,
-                borderRadius: 3.5,
+                borderRadius: '16px',
                 border: '1.5px solid',
                 borderColor: selected ? day0Tokens.sky : day0Tokens.mist,
                 bgcolor: selected ? day0Tokens.skySoft : day0Tokens.surface,

@@ -20,7 +20,7 @@ export function LandingScreen() {
       <Box sx={{ width: '100%', maxWidth: 460, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <Paper
           variant="outlined"
-          sx={{ p: { xs: 3.5, sm: 4.5 }, borderRadius: 5.5, borderColor: day0Tokens.mist, textAlign: 'center' }}
+          sx={{ p: { xs: 3.5, sm: 4.5 }, borderRadius: '24px', borderColor: day0Tokens.mist, textAlign: 'center' }}
         >
           <Box
             sx={{
@@ -45,7 +45,7 @@ export function LandingScreen() {
             With you from day 0.
           </Typography>
           <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 15, lineHeight: 1.6, mb: 0.5 }}>
-            day0 verifies your consistency and rewards it with real coins.
+            Day0 verifies your consistency and rewards it with real coins.
           </Typography>
           <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 15, lineHeight: 1.6, mb: 3 }}>
             We're not live yet — help us build the right thing first.
@@ -55,7 +55,7 @@ export function LandingScreen() {
             {[
               { icon: 'lock', label: 'Anonymous' },
               { icon: 'clock', label: '~2 min' },
-              { icon: 'gift', label: 'Founding Member perk' },
+              { icon: 'gift', label: 'New Member perk' },
             ].map((pill) => (
               <Stack
                 key={pill.label}

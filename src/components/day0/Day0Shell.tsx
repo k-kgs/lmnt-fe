@@ -40,7 +40,7 @@ export function Day0Shell({ progressPct, progressLabel, children }: {
           </Box>
           <Box>
             <Typography sx={{ fontWeight: 800, fontSize: 14, letterSpacing: '0.01em', lineHeight: 1.2 }}>
-              day0
+              Day0
             </Typography>
             <Typography
               sx={{

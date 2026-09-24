@@ -34,10 +34,10 @@ export function WaitlistStep({
     <StepCard onBack={onBack}>
       <Stack direction="row" alignItems="center" gap={1.25}>
         <Day0Icon name="gift" sx={{ color: day0Tokens.sage }} />
-        <Typography sx={{ fontWeight: 700, fontSize: 15 }}>Want first access when day0 launches?</Typography>
+        <Typography sx={{ fontWeight: 700, fontSize: 15 }}>Want first access when Day0 launches?</Typography>
       </Stack>
       <Typography sx={{ fontSize: 12.5, color: day0Tokens.inkSoft, lineHeight: 1.5, mt: 0.75 }}>
-        Join the day0 waitlist and claim +{EMAIL_BONUS_COINS} bonus coins on top of your {BASE_COINS}-coin Founding
+        Join the Day0 waitlist and claim +{EMAIL_BONUS_COINS} bonus coins on top of your {BASE_COINS}-coin New
         Member grant. Totally optional.
       </Typography>
       <TextField

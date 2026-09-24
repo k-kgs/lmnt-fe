@@ -22,7 +22,7 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
   const color = COLOR_MAP[persona.colorToken];
   const [toast, setToast] = useState('');
 
-  const shareText = `I'm a ${persona.name.replace(/^The /, '')} according to day0's Day 0 Check-In — curious what you are?`;
+  const shareText = `I'm a ${persona.name.replace(/^The /, '')} according to Day0's Day 0 Check-In — curious what you are?`;
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   const copyResult = async () => {
@@ -40,7 +40,7 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
     <Stack>
       <Paper
         sx={{
-          borderRadius: 5.5,
+          borderRadius: '24px',
           p: { xs: 3.5, sm: 4 },
           textAlign: 'center',
           color: '#fff',
@@ -79,7 +79,7 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
         <Typography sx={{ fontSize: 14.5, lineHeight: 1.55, opacity: 0.95 }}>{persona.line}</Typography>
       </Paper>
 
-      <Paper variant="outlined" sx={{ mt: 1.75, borderRadius: 4, p: 2.25, borderColor: day0Tokens.mist }}>
+      <Paper variant="outlined" sx={{ mt: 1.75, borderRadius: '18px', p: 2.25, borderColor: day0Tokens.mist }}>
         <Typography
           sx={{
             fontSize: 11,
@@ -99,23 +99,23 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
         direction="row"
         gap={1.5}
         alignItems="flex-start"
-        sx={{ mt: 1.75, bgcolor: day0Tokens.sageSoft, borderRadius: 4, p: 2.25 }}
+        sx={{ mt: 1.75, bgcolor: day0Tokens.sageSoft, borderRadius: '18px', p: 2.25 }}
       >
         <Day0Icon name="badge-check" sx={{ color: day0Tokens.sage, mt: 0.25 }} />
         <Typography sx={{ fontSize: 14 }}>
           {answers.emailChoice === 'given' ? (
             <>
               <Box component="b" sx={{ color: day0Tokens.sage }}>
-                You're on the day0 waitlist.
+                You're on the Day0 waitlist.
               </Box>{' '}
-              {BASE_COINS + EMAIL_BONUS_COINS} Founding Member coins waiting for you at launch.
+              {BASE_COINS + EMAIL_BONUS_COINS} New Member coins waiting for you at launch.
             </>
           ) : (
             <>
               <Box component="b" sx={{ color: day0Tokens.sage }}>
-                You're a Day0 Founding Member.
+                You're a Day0 New Member.
               </Box>{' '}
-              {BASE_COINS} bonus coins secured for whenever day0 launches.
+              {BASE_COINS} bonus coins secured for whenever Day0 launches.
             </>
           )}
         </Typography>

@@ -29,9 +29,10 @@ export interface SurveyAnswers {
   pivotImportance?: string;
   pivotSatisfaction?: Satisfaction;
   branch?: Branch;
-  positiveReason?: string;
-  neutralReason?: string;
+  positiveReasons?: string[];
+  neutralReasons?: string[];
   negativeReasons?: string[];
+  negativeReasonOther?: string;
   rewardKano?: KanoValue;
   monetization?: string;
   age?: string;
