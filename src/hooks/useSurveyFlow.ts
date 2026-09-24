@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useEffect, useMemo, useReducer } from 'react';
 
 // Faithful port of the state machine validated in idea/survey/day0-checkin-v2.html.
 // Branching rules, question copy, and persona logic are locked from that prototype —
@@ -195,6 +195,11 @@ interface FlowState {
   screen: ScreenKey;
   answers: SurveyAnswers;
   history: ScreenKey[];
+  // Generated once per browser and persisted alongside the rest of this state.
+  // Lets the backend tell "this respondent progressed" apart from "a new
+  // respondent started" via an upsert keyed on this id (see api/survey.ts) —
+  // the mechanism that makes drop-off (not just completion) visible server-side.
+  clientId: string;
 }
 
 type FlowAction =
@@ -203,7 +208,41 @@ type FlowAction =
   | { type: 'SET_ANSWERS'; patch: Partial<SurveyAnswers> }
   | { type: 'RESTART' };
 
-const initialState: FlowState = { screen: 'welcome', answers: {}, history: [] };
+const STORAGE_KEY = 'day0_survey_state_v1';
+
+function newClientId(): string {
+  return typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function freshState(): FlowState {
+  return { screen: 'welcome', answers: {}, history: [], clientId: newClientId() };
+}
+
+// A refresh or closed tab shouldn't lose progress — every dispatch below
+// re-persists the whole state (see the effect in useSurveyFlow), and this is
+// what's read back on mount. Falls back to a brand-new session on any error
+// (private browsing, corrupted JSON, etc.) rather than failing to load.
+function loadInitialState(): FlowState {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<FlowState>;
+      if (parsed && parsed.screen && parsed.clientId) {
+        return {
+          screen: parsed.screen,
+          answers: parsed.answers ?? {},
+          history: parsed.history ?? [],
+          clientId: parsed.clientId,
+        };
+      }
+    }
+  } catch {
+    // ignore — fall through to a fresh session
+  }
+  return freshState();
+}
 
 function reducer(state: FlowState, action: FlowAction): FlowState {
   switch (action.type) {
@@ -220,14 +259,24 @@ function reducer(state: FlowState, action: FlowAction): FlowState {
       return { ...state, screen, history };
     }
     case 'RESTART':
-      return initialState;
+      // A fresh clientId, deliberately — an abandoned/completed attempt's row
+      // stays exactly as it was instead of being overwritten by the retry.
+      return freshState();
     default:
       return state;
   }
 }
 
 export function useSurveyFlow() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, undefined, loadInitialState);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      // private browsing / storage full — resuming just won't work, no crash
+    }
+  }, [state]);
 
   const goTo = useCallback((screen: ScreenKey) => dispatch({ type: 'GO_TO', screen }), []);
   const goBack = useCallback(() => dispatch({ type: 'GO_BACK' }), []);
@@ -252,6 +301,7 @@ export function useSurveyFlow() {
   return {
     screen: state.screen,
     answers: state.answers,
+    clientId: state.clientId,
     canGoBack,
     progress,
     goTo,

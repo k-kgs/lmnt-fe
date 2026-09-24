@@ -1,20 +1,28 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiFetch } from './client';
-import type { SurveyAnswers, Persona } from '../hooks/useSurveyFlow';
+import type { SurveyAnswers, Persona, ScreenKey } from '../hooks/useSurveyFlow';
 
-type SurveyResponsePayload = SurveyAnswers & { personaKey: Persona['key'] };
+export interface SurveyCheckpointPayload extends SurveyAnswers {
+  clientId: string;
+  lastScreen: ScreenKey;
+  completed: boolean;
+  personaKey?: Persona['key'];
+}
 
 // Public, unauthenticated endpoint — respondents may or may not be logged in.
 // apiFetch already omits the Authorization header when there's no session token.
-function submitSurveyResponse(payload: SurveyResponsePayload): Promise<{ id: string }> {
+// This is an upsert keyed on clientId: fired on every screen transition (see
+// SurveyScreen.tsx), not just completion, so a respondent who quits partway
+// still leaves a completed=false row behind — that drop-off is the point.
+function checkpointSurveyResponse(payload: SurveyCheckpointPayload): Promise<{ id: string }> {
   return apiFetch<{ id: string }>('/api/survey-responses', {
     method: 'POST',
     body: JSON.stringify(payload),
   });
 }
 
-export function useSubmitSurveyResponse() {
+export function useCheckpointSurveyResponse() {
   return useMutation({
-    mutationFn: submitSurveyResponse,
+    mutationFn: checkpointSurveyResponse,
   });
 }

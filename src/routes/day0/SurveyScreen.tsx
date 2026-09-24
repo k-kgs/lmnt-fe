@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Day0Shell } from '../../components/day0/Day0Shell';
 import { WelcomeStep } from '../../components/day0/WelcomeStep';
 import { TrackPickStep } from '../../components/day0/TrackPickStep';
@@ -11,24 +11,29 @@ import { DemographicsStep } from '../../components/day0/DemographicsStep';
 import { WaitlistStep } from '../../components/day0/WaitlistStep';
 import { ResultStep } from '../../components/day0/ResultStep';
 import { useSurveyFlow, POSITIVE_OPTIONS, NEUTRAL_OPTIONS, computePersona } from '../../hooks/useSurveyFlow';
-import { useSubmitSurveyResponse } from '../../api/survey';
+import { useCheckpointSurveyResponse } from '../../api/survey';
 
 export function SurveyScreen() {
-  const { screen, answers, canGoBack, progress, goTo, goBack, setAnswers, restart, goToNextFromPivot } =
+  const { screen, answers, clientId, canGoBack, progress, goTo, goBack, setAnswers, restart, goToNextFromPivot } =
     useSurveyFlow();
-  const submit = useSubmitSurveyResponse();
-  const submittedRef = useRef(false);
+  const checkpoint = useCheckpointSurveyResponse();
 
+  // Fires on every screen transition, not just completion — a respondent who
+  // quits at question 4 still leaves a completed=false row behind server-side
+  // (see api/survey.ts). Resuming after a refresh re-fires for the same
+  // clientId, which is a harmless no-op upsert of the same data.
   useEffect(() => {
-    if (screen === 'result' && !submittedRef.current) {
-      submittedRef.current = true;
-      submit.mutate({ ...answers, personaKey: computePersona(answers).key });
-    }
+    checkpoint.mutate({
+      ...answers,
+      clientId,
+      lastScreen: screen,
+      completed: screen === 'result',
+      personaKey: screen === 'result' ? computePersona(answers).key : undefined,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [screen]);
+  }, [screen, clientId]);
 
   const handleRestart = () => {
-    submittedRef.current = false;
     restart();
   };
 
