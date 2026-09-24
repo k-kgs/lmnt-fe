@@ -41,14 +41,8 @@ export function LandingScreen() {
           >
             0
           </Box>
-          <Typography variant="h1" sx={{ fontSize: 30, mb: 1.5 }}>
+          <Typography variant="h1" sx={{ fontSize: 30, mb: 3 }}>
             kiVo
-          </Typography>
-          <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 15, lineHeight: 1.6, mb: 0.5 }}>
-            Verified consistency, rewarded.
-          </Typography>
-          <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 15, lineHeight: 1.6, mb: 3 }}>
-            We're not live yet — help us build the right thing first.
           </Typography>
 
           <Stack direction="row" gap={1} justifyContent="center" flexWrap="wrap" mb={3.5}>

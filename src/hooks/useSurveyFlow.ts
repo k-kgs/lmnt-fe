@@ -29,7 +29,6 @@ export interface SurveyAnswers {
   trackOther?: string;
   trackingTool?: string;
   trackingToolOther?: string;
-  trackingSatisfaction?: Satisfaction;
   trackingAppFeedback?: string;
   pivotImportance?: string;
   pivotSatisfaction?: Satisfaction;
@@ -134,8 +133,8 @@ export const EMAIL_BONUS_COINS = 50;
 
 const SCREEN_RANK: Record<Exclude<ScreenKey, 'welcome' | 'result'>, number> = {
   trackPick: 1,
-  trackingMethod: 2,
-  pivot: 3,
+  pivot: 2,
+  trackingMethod: 3,
   branchPositive: 4,
   branchNegative: 4,
   branchNeutral: 4,
@@ -315,7 +314,7 @@ export function useSurveyFlow() {
     return { pct: Math.round((rank / TOTAL_QUESTIONS) * 100), label: `Question ${rank} of ${TOTAL_QUESTIONS}` };
   }, [state.screen]);
 
-  const goToNextFromPivot = useCallback(() => {
+  const goToNextFromTrackingMethod = useCallback(() => {
     const branch = branchFromSatisfaction(state.answers.pivotSatisfaction);
     setAnswers({ branch });
     goTo(branch === 'positive' ? 'branchPositive' : branch === 'neutral' ? 'branchNeutral' : 'branchNegative');
@@ -331,6 +330,6 @@ export function useSurveyFlow() {
     goBack,
     setAnswers,
     restart,
-    goToNextFromPivot,
+    goToNextFromTrackingMethod,
   };
 }

@@ -35,8 +35,18 @@ function StepTransition({ animKey, children }: { animKey: string; children: Reac
 }
 
 export function SurveyScreen() {
-  const { screen, answers, clientId, canGoBack, progress, goTo, goBack, setAnswers, restart, goToNextFromPivot } =
-    useSurveyFlow();
+  const {
+    screen,
+    answers,
+    clientId,
+    canGoBack,
+    progress,
+    goTo,
+    goBack,
+    setAnswers,
+    restart,
+    goToNextFromTrackingMethod,
+  } = useSurveyFlow();
   const checkpoint = useCheckpointSurveyResponse();
 
   // Fires on every screen transition, not just completion — a respondent who
@@ -67,17 +77,22 @@ export function SurveyScreen() {
         <TrackPickStep
           answers={answers}
           onAnswer={setAnswers}
-          onNext={() => goTo('trackingMethod')}
+          onNext={() => goTo('pivot')}
           onBack={canGoBack ? goBack : undefined}
         />
       )}
 
-      {screen === 'trackingMethod' && (
-        <TrackingMethodStep answers={answers} onAnswer={setAnswers} onNext={() => goTo('pivot')} onBack={goBack} />
+      {screen === 'pivot' && (
+        <PivotStep answers={answers} onAnswer={setAnswers} onNext={() => goTo('trackingMethod')} onBack={goBack} />
       )}
 
-      {screen === 'pivot' && (
-        <PivotStep answers={answers} onAnswer={setAnswers} onNext={goToNextFromPivot} onBack={goBack} />
+      {screen === 'trackingMethod' && (
+        <TrackingMethodStep
+          answers={answers}
+          onAnswer={setAnswers}
+          onNext={goToNextFromTrackingMethod}
+          onBack={goBack}
+        />
       )}
 
       {screen === 'branchPositive' && (
