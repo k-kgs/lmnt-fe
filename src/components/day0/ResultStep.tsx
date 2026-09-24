@@ -79,29 +79,9 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
         <Typography sx={{ fontSize: 14.5, lineHeight: 1.55, opacity: 0.95 }}>{persona.line}</Typography>
       </Paper>
 
-      <Paper variant="outlined" sx={{ mt: 1.75, borderRadius: '18px', p: 2.25, borderColor: day0Tokens.mist }}>
-        <Typography
-          sx={{
-            fontSize: 11,
-            fontWeight: 800,
-            letterSpacing: '0.06em',
-            textTransform: 'uppercase',
-            color: day0Tokens.inkSoft,
-            mb: 0.75,
-          }}
-        >
-          Made for you
-        </Typography>
-        <Typography sx={{ fontSize: 14 }}>{persona.tip}</Typography>
-      </Paper>
-
       <Stack
-        direction="row"
-        gap={1.5}
-        alignItems="flex-start"
         sx={{ mt: 1.75, bgcolor: day0Tokens.sageSoft, borderRadius: '18px', p: 2.25 }}
       >
-        <Day0Icon name="badge-check" sx={{ color: day0Tokens.sage, mt: 0.25 }} />
         <Typography sx={{ fontSize: 14 }}>
           {answers.emailChoice === 'given' ? (
             <>
