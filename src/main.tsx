@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { kayamTheme } from './theme/kayamTheme';
+import { day0Theme } from './theme/day0Theme';
 import { initPosthog } from './lib/posthog';
 import { AuthProvider } from './context/AuthContext';
 import App from './App.tsx';
@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={kayamTheme}>
+      <ThemeProvider theme={day0Theme}>
         <CssBaseline />
         <BrowserRouter>
           <AuthProvider>
