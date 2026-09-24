@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useReducer } from 'react';
 export type ScreenKey =
   | 'welcome'
   | 'trackPick'
+  | 'trackingMethod'
   | 'pivot'
   | 'branchPositive'
   | 'branchNegative'
@@ -26,6 +27,10 @@ export type EmailChoice = 'given' | 'skipped';
 export interface SurveyAnswers {
   track?: Track;
   trackOther?: string;
+  trackingTool?: string;
+  trackingToolOther?: string;
+  trackingSatisfaction?: Satisfaction;
+  trackingAppFeedback?: string;
   pivotImportance?: string;
   pivotSatisfaction?: Satisfaction;
   branch?: Branch;
@@ -98,6 +103,22 @@ export const STRUGGLE_OPTIONS = [
   { v: 'other', t: 'Other', icon: 'plus-circle' },
 ];
 
+export const TRACKING_TOOL_OPTIONS = [
+  { v: 'app', t: 'A fitness or habit-tracking app', icon: 'smartphone' },
+  { v: 'phone', t: "My phone's built-in tools (calendar, notes, reminders)", icon: 'calendar-check' },
+  { v: 'paper', t: 'Pen & paper journal', icon: 'notebook-pen' },
+  { v: 'social', t: 'A social media or accountability group', icon: 'users' },
+  { v: 'none', t: "I don't track — I just remember", icon: 'brain' },
+  { v: 'other', t: 'Other', icon: 'plus-circle' },
+];
+
+export const TRACKING_APP_FEEDBACK_OPTIONS: { v: string; t: string }[] = [
+  { v: 'love', t: 'Love it' },
+  { v: 'fine', t: "It's fine" },
+  { v: 'frustrated', t: 'Frustrates me' },
+  { v: 'skip', t: 'Prefer not to say' },
+];
+
 export const MONETIZATION_OPTIONS = [
   { t: "I'd stick with the free version", icon: 'unlock' },
   { t: "Pay a small monthly subscription if it's genuinely good", icon: 'credit-card' },
@@ -113,16 +134,17 @@ export const EMAIL_BONUS_COINS = 50;
 
 const SCREEN_RANK: Record<Exclude<ScreenKey, 'welcome' | 'result'>, number> = {
   trackPick: 1,
-  pivot: 2,
-  branchPositive: 3,
-  branchNegative: 3,
-  branchNeutral: 3,
-  rewardKano: 4,
-  monetization: 5,
-  demographics: 6,
-  waitlist: 7,
+  trackingMethod: 2,
+  pivot: 3,
+  branchPositive: 4,
+  branchNegative: 4,
+  branchNeutral: 4,
+  rewardKano: 5,
+  monetization: 6,
+  demographics: 7,
+  waitlist: 8,
 };
-export const TOTAL_QUESTIONS = 7;
+export const TOTAL_QUESTIONS = 8;
 
 export function trackLabel(answers: SurveyAnswers): string {
   if (answers.track === 'other' && answers.trackOther) return answers.trackOther.toLowerCase();
@@ -159,7 +181,7 @@ export function computePersona(answers: SurveyAnswers): Persona {
       name: 'The Streaker',
       colorToken: 'sunrise',
       line: "You've already got momentum — you just need something that keeps proving it to you.",
-      tip: "day0's streak-freeze days are built for people exactly like you: consistency without burnout.",
+      tip: "kiVo's streak-freeze days are built for people exactly like you: consistency without burnout.",
     };
   }
   if (answers.branch === 'positive') {
@@ -169,7 +191,7 @@ export function computePersona(answers: SurveyAnswers): Persona {
       name: 'The Quiet Optimizer',
       colorToken: 'plum',
       line: "You don't need hype, you need proof — real numbers, not vibes.",
-      tip: "day0's verified check-ins exist for exactly this: data you can actually trust, including your own.",
+      tip: "kiVo's verified check-ins exist for exactly this: data you can actually trust, including your own.",
     };
   }
   if (answers.branch === 'negative') {
@@ -179,7 +201,7 @@ export function computePersona(answers: SurveyAnswers): Persona {
       name: 'The Comeback Kid',
       colorToken: 'sky',
       line: "You don't quit trying — you just haven't had a system that quits believing in you either.",
-      tip: "day0 never resets your progress to zero. Miss a day, the streak bends — it doesn't break.",
+      tip: "kiVo never resets your progress to zero. Miss a day, the streak bends — it doesn't break.",
     };
   }
   return {
@@ -188,7 +210,7 @@ export function computePersona(answers: SurveyAnswers): Persona {
     name: 'The Starter',
     colorToken: 'sage',
     line: "You're closer to your best self than you think — you just need the right nudge at the right time.",
-    tip: "Your first challenge on day0 starts smaller than you'd expect — on purpose.",
+    tip: "Your first challenge on kiVo starts smaller than you'd expect — on purpose.",
   };
 }
 

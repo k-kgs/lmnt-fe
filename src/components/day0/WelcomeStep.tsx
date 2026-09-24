@@ -32,7 +32,7 @@ export function WelcomeStep({ onNext }: { onNext: () => void }) {
           how you build habits.
         </Typography>
         <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 14, lineHeight: 1.55, mb: 0.5 }}>
-          Day0 verifies your consistency and rewards it with real coins.
+          kiVo verifies your consistency and rewards it with real coins.
         </Typography>
         <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 14, lineHeight: 1.55 }}>
           Nothing here is a test — just help us build the right thing, before we build it.

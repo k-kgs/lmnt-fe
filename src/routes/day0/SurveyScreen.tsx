@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
+import { Box, keyframes } from '@mui/material';
 import { Day0Shell } from '../../components/day0/Day0Shell';
 import { WelcomeStep } from '../../components/day0/WelcomeStep';
 import { TrackPickStep } from '../../components/day0/TrackPickStep';
+import { TrackingMethodStep } from '../../components/day0/TrackingMethodStep';
 import { PivotStep } from '../../components/day0/PivotStep';
 import { ChipQuestionStep } from '../../components/day0/ChipQuestionStep';
 import { BranchNegativeStep } from '../../components/day0/BranchNegativeStep';
@@ -12,6 +14,25 @@ import { WaitlistStep } from '../../components/day0/WaitlistStep';
 import { ResultStep } from '../../components/day0/ResultStep';
 import { useSurveyFlow, POSITIVE_OPTIONS, NEUTRAL_OPTIONS, computePersona } from '../../hooks/useSurveyFlow';
 import { useCheckpointSurveyResponse } from '../../api/survey';
+
+const stepIn = keyframes`
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+function StepTransition({ animKey, children }: { animKey: string; children: ReactNode }) {
+  return (
+    <Box
+      key={animKey}
+      sx={{
+        animation: `${stepIn} 320ms cubic-bezier(0.16, 1, 0.3, 1)`,
+        '@media (prefers-reduced-motion: reduce)': { animation: 'none' },
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
 
 export function SurveyScreen() {
   const { screen, answers, clientId, canGoBack, progress, goTo, goBack, setAnswers, restart, goToNextFromPivot } =
@@ -39,15 +60,20 @@ export function SurveyScreen() {
 
   return (
     <Day0Shell progressPct={progress.pct} progressLabel={progress.label}>
+      <StepTransition animKey={screen}>
       {screen === 'welcome' && <WelcomeStep onNext={() => goTo('trackPick')} />}
 
       {screen === 'trackPick' && (
         <TrackPickStep
           answers={answers}
           onAnswer={setAnswers}
-          onNext={() => goTo('pivot')}
+          onNext={() => goTo('trackingMethod')}
           onBack={canGoBack ? goBack : undefined}
         />
+      )}
+
+      {screen === 'trackingMethod' && (
+        <TrackingMethodStep answers={answers} onAnswer={setAnswers} onNext={() => goTo('pivot')} onBack={goBack} />
       )}
 
       {screen === 'pivot' && (
@@ -131,6 +157,7 @@ export function SurveyScreen() {
       )}
 
       {screen === 'result' && <ResultStep answers={answers} onRestart={handleRestart} />}
+      </StepTransition>
     </Day0Shell>
   );
 }

@@ -31,6 +31,9 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import SpaIcon from '@mui/icons-material/Spa';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
 
 // Maps the icon names used in idea/survey/day0-checkin-v2.html (Lucide) to their
 // closest @mui/icons-material equivalent, so we don't add a new icon dependency.
@@ -66,6 +69,9 @@ export const DAY0_ICONS: Record<string, ComponentType<SvgIconProps>> = {
   repeat: RepeatIcon,
   sprout: SpaIcon,
   'badge-check': VerifiedIcon,
+  smartphone: PhoneIphoneIcon,
+  'notebook-pen': EditNoteIcon,
+  brain: PsychologyAltIcon,
 };
 
 export function Day0Icon({ name, ...props }: { name?: string } & SvgIconProps) {

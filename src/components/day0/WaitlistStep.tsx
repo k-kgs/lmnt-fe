@@ -34,11 +34,11 @@ export function WaitlistStep({
     <StepCard onBack={onBack}>
       <Stack direction="row" alignItems="center" gap={1.25}>
         <Day0Icon name="gift" sx={{ color: day0Tokens.sage }} />
-        <Typography sx={{ fontWeight: 700, fontSize: 15 }}>Want first access when Day0 launches?</Typography>
+        <Typography sx={{ fontWeight: 700, fontSize: 15 }}>Get notified when we launch</Typography>
       </Stack>
       <Typography sx={{ fontSize: 12.5, color: day0Tokens.inkSoft, lineHeight: 1.5, mt: 0.75 }}>
-        Join the Day0 waitlist and claim +{EMAIL_BONUS_COINS} bonus coins on top of your {BASE_COINS}-coin New
-        Member grant. Totally optional.
+        Leave your email if you'd like an update when kiVo launches. This step is optional — your{' '}
+        {BASE_COINS}-coin New Member bonus is kept either way, and giving your email adds {EMAIL_BONUS_COINS} more.
       </Typography>
       <TextField
         fullWidth
@@ -63,10 +63,10 @@ export function WaitlistStep({
           onClick={join}
           sx={{ py: 1.5, bgcolor: day0Tokens.ink, '&:hover': { bgcolor: day0Tokens.ink } }}
         >
-          Join waitlist &amp; claim +{EMAIL_BONUS_COINS} coins
+          Join waitlist
         </Button>
         <Button fullWidth variant="text" onClick={skip} sx={{ mt: 1, color: day0Tokens.inkSoft, fontSize: 12.5 }}>
-          Skip — keep base {BASE_COINS}-coin bonus
+          Skip this step
         </Button>
       </Box>
     </StepCard>

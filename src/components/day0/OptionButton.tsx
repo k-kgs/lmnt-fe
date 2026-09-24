@@ -39,15 +39,29 @@ export function OptionButton({
     >
       <Box
         sx={{
-          width: 9,
-          height: 9,
+          width: 20,
+          height: 20,
           flex: 'none',
-          borderRadius: multi ? '4px' : '50%',
-          border: '1.5px solid',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: multi ? '6px' : '50%',
+          border: '2px solid',
           borderColor: selected ? day0Tokens.sky : day0Tokens.inkSoft,
           bgcolor: selected ? day0Tokens.sky : 'transparent',
         }}
-      />
+      >
+        {selected && (
+          <Box
+            sx={{
+              width: multi ? 10 : 8,
+              height: multi ? 10 : 8,
+              borderRadius: multi ? '2px' : '50%',
+              bgcolor: day0Tokens.paper,
+            }}
+          />
+        )}
+      </Box>
       {icon && <Day0Icon name={icon} sx={{ fontSize: 18, color: selected ? day0Tokens.sky : day0Tokens.inkSoft }} />}
       <Stack sx={{ flex: 1 }}>
         <Typography sx={{ fontWeight: 600, fontSize: 14.5, color: 'inherit' }}>{label}</Typography>

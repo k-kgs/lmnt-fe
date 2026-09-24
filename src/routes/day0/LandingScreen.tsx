@@ -42,10 +42,10 @@ export function LandingScreen() {
             0
           </Box>
           <Typography variant="h1" sx={{ fontSize: 30, mb: 1.5 }}>
-            With you from day 0.
+            kiVo
           </Typography>
           <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 15, lineHeight: 1.6, mb: 0.5 }}>
-            Day0 verifies your consistency and rewards it with real coins.
+            Verified consistency, rewarded.
           </Typography>
           <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 15, lineHeight: 1.6, mb: 3 }}>
             We're not live yet — help us build the right thing first.

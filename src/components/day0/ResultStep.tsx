@@ -22,7 +22,7 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
   const color = COLOR_MAP[persona.colorToken];
   const [toast, setToast] = useState('');
 
-  const shareText = `I'm a ${persona.name.replace(/^The /, '')} according to Day0's Day 0 Check-In — curious what you are?`;
+  const shareText = `I'm a ${persona.name.replace(/^The /, '')} according to kiVo's Day 0 Check-In — curious what you are?`;
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   const copyResult = async () => {
@@ -106,16 +106,16 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
           {answers.emailChoice === 'given' ? (
             <>
               <Box component="b" sx={{ color: day0Tokens.sage }}>
-                You're on the Day0 waitlist.
+                Thank you for helping us shape our product. We'll reach out shortly.
               </Box>{' '}
-              {BASE_COINS + EMAIL_BONUS_COINS} New Member coins waiting for you at launch.
+              {BASE_COINS + EMAIL_BONUS_COINS} New Member coins are waiting for you at launch.
             </>
           ) : (
             <>
               <Box component="b" sx={{ color: day0Tokens.sage }}>
-                You're a Day0 New Member.
+                Thank you for helping us shape our product.
               </Box>{' '}
-              {BASE_COINS} bonus coins secured for whenever Day0 launches.
+              {BASE_COINS} bonus coins secured for whenever kiVo launches.
             </>
           )}
         </Typography>
