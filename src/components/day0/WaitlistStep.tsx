@@ -37,7 +37,7 @@ export function WaitlistStep({
         <Typography sx={{ fontWeight: 700, fontSize: 15 }}>Get notified when we launch</Typography>
       </Stack>
       <Typography sx={{ fontSize: 12.5, color: day0Tokens.inkSoft, lineHeight: 1.5, mt: 0.75 }}>
-        Leave your email if you'd like an update when kiVo launches. This step is optional — your{' '}
+        Leave your email if you'd like an update when kiVo launches. This step is optional. Your{' '}
         {BASE_COINS}-coin New Member bonus is kept either way, and giving your email adds {EMAIL_BONUS_COINS} more.
       </Typography>
       <TextField

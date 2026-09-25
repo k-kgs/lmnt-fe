@@ -22,7 +22,7 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
   const color = COLOR_MAP[persona.colorToken];
   const [toast, setToast] = useState('');
 
-  const shareText = `I'm a ${persona.name.replace(/^The /, '')} according to kiVo's Day 0 Check-In — curious what you are?`;
+  const shareText = `I'm a ${persona.name.replace(/^The /, '')} according to kiVo's Day 0 Check-In. Curious what you are?`;
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
   const copyResult = async () => {
@@ -31,7 +31,7 @@ export function ResultStep({ answers, onRestart }: { answers: SurveyAnswers; onR
       await navigator.clipboard.writeText(full);
       setToast('Copied to clipboard');
     } catch {
-      setToast("Couldn't copy — long-press to select");
+      setToast("Couldn't copy. Long-press to select.");
     }
     setTimeout(() => setToast(''), 1800);
   };

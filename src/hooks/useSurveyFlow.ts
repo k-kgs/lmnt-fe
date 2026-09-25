@@ -107,7 +107,7 @@ export const TRACKING_TOOL_OPTIONS = [
   { v: 'phone', t: "My phone's built-in tools (calendar, notes, reminders)", icon: 'calendar-check' },
   { v: 'paper', t: 'Pen & paper journal', icon: 'notebook-pen' },
   { v: 'social', t: 'A social media or accountability group', icon: 'users' },
-  { v: 'none', t: "I don't track — I just remember", icon: 'brain' },
+  { v: 'none', t: "I don't track. I just remember", icon: 'brain' },
   { v: 'other', t: 'Other', icon: 'plus-circle' },
 ];
 
@@ -179,7 +179,7 @@ export function computePersona(answers: SurveyAnswers): Persona {
       icon: 'flame',
       name: 'The Streaker',
       colorToken: 'sunrise',
-      line: "You've already got momentum — you just need something that keeps proving it to you.",
+      line: "You've already got momentum. You just need something that keeps proving it to you.",
       tip: "kiVo's streak-freeze days are built for people exactly like you: consistency without burnout.",
     };
   }
@@ -189,7 +189,7 @@ export function computePersona(answers: SurveyAnswers): Persona {
       icon: 'bar-chart-3',
       name: 'The Quiet Optimizer',
       colorToken: 'plum',
-      line: "You don't need hype, you need proof — real numbers, not vibes.",
+      line: "You don't need hype, you need proof: real numbers, not vibes.",
       tip: "kiVo's verified check-ins exist for exactly this: data you can actually trust, including your own.",
     };
   }
@@ -199,7 +199,7 @@ export function computePersona(answers: SurveyAnswers): Persona {
       icon: 'repeat',
       name: 'The Comeback Kid',
       colorToken: 'sky',
-      line: "You don't quit trying — you just haven't had a system that quits believing in you either.",
+      line: "You don't quit trying. You just haven't had a system that quits believing in you either.",
       tip: "kiVo never resets your progress to zero. Miss a day, the streak bends — it doesn't break.",
     };
   }
@@ -208,7 +208,7 @@ export function computePersona(answers: SurveyAnswers): Persona {
     icon: 'sprout',
     name: 'The Starter',
     colorToken: 'sage',
-    line: "You're closer to your best self than you think — you just need the right nudge at the right time.",
+    line: "You're closer to your best self than you think. You just need the right nudge at the right time.",
     tip: "Your first challenge on kiVo starts smaller than you'd expect — on purpose.",
   };
 }
@@ -308,7 +308,7 @@ export function useSurveyFlow() {
   const canGoBack = state.history.length > 0;
 
   const progress = useMemo(() => {
-    if (state.screen === 'welcome') return { pct: 0, label: 'Day 0 Check-In' };
+    if (state.screen === 'welcome') return { pct: 0, label: '' };
     if (state.screen === 'result') return { pct: 100, label: 'Your result' };
     const rank = SCREEN_RANK[state.screen as Exclude<ScreenKey, 'welcome' | 'result'>];
     return { pct: Math.round((rank / TOTAL_QUESTIONS) * 100), label: `Question ${rank} of ${TOTAL_QUESTIONS}` };

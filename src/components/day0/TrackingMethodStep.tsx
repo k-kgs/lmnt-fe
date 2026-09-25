@@ -57,7 +57,7 @@ export function TrackingMethodStep({
       {showAppFeedback && (
         <Box mt={3}>
           <Typography sx={{ fontSize: 13.5, fontWeight: 700, mb: 0.25 }}>
-            Since you use an app — how do you feel about it?{' '}
+            Since you use an app, how do you feel about it?{' '}
             <Box component="span" sx={{ fontWeight: 500, opacity: 0.6 }}>
               (optional)
             </Box>

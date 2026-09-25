@@ -2,6 +2,7 @@ import { Stack } from '@mui/material';
 import { StepCard } from './StepCard';
 import { OptionButton } from './OptionButton';
 import { KANO5, type KanoValue, type SurveyAnswers } from '../../hooks/useSurveyFlow';
+import { useAutoAdvance } from '../../hooks/useAutoAdvance';
 
 export function RewardKanoStep({
   answers,
@@ -14,10 +15,8 @@ export function RewardKanoStep({
   onNext: () => void;
   onBack: () => void;
 }) {
-  const handlePick = (value: KanoValue) => {
-    onAnswer({ rewardKano: value });
-    setTimeout(onNext, 220);
-  };
+  const advance = useAutoAdvance(onNext);
+  const handlePick = (value: KanoValue) => advance(() => onAnswer({ rewardKano: value }));
 
   return (
     <StepCard

@@ -35,7 +35,7 @@ export function WelcomeStep({ onNext }: { onNext: () => void }) {
           kiVo verifies your consistency and rewards it with real coins.
         </Typography>
         <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 14, lineHeight: 1.55 }}>
-          Nothing here is a test — just help us build the right thing, before we build it.
+          Nothing here is a test. Just help us build the right thing, before we build it.
         </Typography>
         <Stack direction="row" gap={1} justifyContent="center" flexWrap="wrap" mt={2}>
           {[

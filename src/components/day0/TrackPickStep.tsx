@@ -3,6 +3,7 @@ import { day0Tokens } from '../../theme/day0Theme';
 import { StepCard } from './StepCard';
 import { Day0Icon } from './icons';
 import { TRACK_OPTIONS, type SurveyAnswers, type Track } from '../../hooks/useSurveyFlow';
+import { useAutoAdvance } from '../../hooks/useAutoAdvance';
 
 export function TrackPickStep({
   answers,
@@ -17,11 +18,10 @@ export function TrackPickStep({
 }) {
   const showOtherInput = answers.track === 'other';
 
+  const advance = useAutoAdvance(onNext);
   const handlePick = (value: Track) => {
-    onAnswer({ track: value });
-    if (value !== 'other') {
-      setTimeout(onNext, 240);
-    }
+    if (value === 'other') onAnswer({ track: value });
+    else advance(() => onAnswer({ track: value }));
   };
 
   return (
