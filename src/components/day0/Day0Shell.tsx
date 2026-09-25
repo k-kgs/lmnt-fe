@@ -1,5 +1,6 @@
 import { Box, LinearProgress, Stack, Typography } from '@mui/material';
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { day0Tokens } from '../../theme/day0Theme';
 
 export function Day0Shell({ progressPct, progressLabel, children }: {
@@ -20,26 +21,20 @@ export function Day0Shell({ progressPct, progressLabel, children }: {
     >
       <Box sx={{ width: '100%', maxWidth: 460, display: 'flex', flexDirection: 'column' }}>
         <Stack direction="row" alignItems="center" gap={1.25} mb={2.5}>
-          <Box
-            sx={{
-              width: 30,
-              height: 30,
-              borderRadius: '50%',
-              bgcolor: day0Tokens.skySoft,
-              color: day0Tokens.sky,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontFamily: "'Fraunces', serif",
-              fontWeight: 700,
-              fontSize: 15,
-              flex: 'none',
-            }}
-          >
-            0
-          </Box>
           <Box>
-            <Typography sx={{ fontWeight: 800, fontSize: 14, letterSpacing: '0.01em', lineHeight: 1.2 }}>
+            <Typography
+              component={Link}
+              to="/"
+              sx={{
+                display: 'block',
+                fontWeight: 800,
+                fontSize: 16,
+                letterSpacing: '0.01em',
+                lineHeight: 1.2,
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
               kiVo
             </Typography>
             <Typography
