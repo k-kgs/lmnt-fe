@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useReducer } from 'react';
 // this is translation to React idioms, not a redesign.
 
 export type ScreenKey =
-  | 'welcome'
   | 'trackPick'
   | 'trackingMethod'
   | 'pivot'
@@ -131,13 +130,13 @@ export const GENDER_OPTIONS = ['Male', 'Female', 'Non-binary', 'Prefer not to sa
 export const BASE_COINS = 50;
 export const EMAIL_BONUS_COINS = 50;
 
-const SCREEN_RANK: Record<Exclude<ScreenKey, 'welcome' | 'result'>, number> = {
+const SCREEN_RANK: Record<Exclude<ScreenKey, 'result'>, number> = {
   trackPick: 1,
   pivot: 2,
-  trackingMethod: 3,
-  branchPositive: 4,
-  branchNegative: 4,
-  branchNeutral: 4,
+  branchPositive: 3,
+  branchNegative: 3,
+  branchNeutral: 3,
+  trackingMethod: 4,
   rewardKano: 5,
   monetization: 6,
   demographics: 7,
@@ -239,7 +238,7 @@ function newClientId(): string {
 }
 
 function freshState(): FlowState {
-  return { screen: 'welcome', answers: {}, history: [], clientId: newClientId() };
+  return { screen: 'trackPick', answers: {}, history: [], clientId: newClientId() };
 }
 
 // A refresh or closed tab shouldn't lose progress — every dispatch below
@@ -252,10 +251,12 @@ function loadInitialState(): FlowState {
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<FlowState>;
       if (parsed && parsed.screen && parsed.clientId) {
+        // The intro screen was removed; older saved sessions may still point at it.
+        const legacy = (s: string) => s === 'welcome';
         return {
-          screen: parsed.screen,
+          screen: legacy(parsed.screen) ? 'trackPick' : parsed.screen,
           answers: parsed.answers ?? {},
-          history: parsed.history ?? [],
+          history: (parsed.history ?? []).filter((s) => !legacy(s)),
           clientId: parsed.clientId,
         };
       }
@@ -308,13 +309,12 @@ export function useSurveyFlow() {
   const canGoBack = state.history.length > 0;
 
   const progress = useMemo(() => {
-    if (state.screen === 'welcome') return { pct: 0, label: '' };
     if (state.screen === 'result') return { pct: 100, label: 'Your result' };
-    const rank = SCREEN_RANK[state.screen as Exclude<ScreenKey, 'welcome' | 'result'>];
+    const rank = SCREEN_RANK[state.screen as Exclude<ScreenKey, 'result'>];
     return { pct: Math.round((rank / TOTAL_QUESTIONS) * 100), label: `Question ${rank} of ${TOTAL_QUESTIONS}` };
   }, [state.screen]);
 
-  const goToNextFromTrackingMethod = useCallback(() => {
+  const goToNextFromPivot = useCallback(() => {
     const branch = branchFromSatisfaction(state.answers.pivotSatisfaction);
     setAnswers({ branch });
     goTo(branch === 'positive' ? 'branchPositive' : branch === 'neutral' ? 'branchNeutral' : 'branchNegative');
@@ -330,6 +330,6 @@ export function useSurveyFlow() {
     goBack,
     setAnswers,
     restart,
-    goToNextFromTrackingMethod,
+    goToNextFromPivot,
   };
 }

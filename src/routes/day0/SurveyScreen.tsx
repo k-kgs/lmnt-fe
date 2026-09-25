@@ -1,7 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { Box, keyframes } from '@mui/material';
 import { Day0Shell } from '../../components/day0/Day0Shell';
-import { WelcomeStep } from '../../components/day0/WelcomeStep';
 import { TrackPickStep } from '../../components/day0/TrackPickStep';
 import { TrackingMethodStep } from '../../components/day0/TrackingMethodStep';
 import { PivotStep } from '../../components/day0/PivotStep';
@@ -45,7 +44,7 @@ export function SurveyScreen() {
     goBack,
     setAnswers,
     restart,
-    goToNextFromTrackingMethod,
+    goToNextFromPivot,
   } = useSurveyFlow();
   const checkpoint = useCheckpointSurveyResponse();
 
@@ -71,8 +70,6 @@ export function SurveyScreen() {
   return (
     <Day0Shell progressPct={progress.pct} progressLabel={progress.label}>
       <StepTransition animKey={screen}>
-      {screen === 'welcome' && <WelcomeStep onNext={() => goTo('trackPick')} />}
-
       {screen === 'trackPick' && (
         <TrackPickStep
           answers={answers}
@@ -83,14 +80,14 @@ export function SurveyScreen() {
       )}
 
       {screen === 'pivot' && (
-        <PivotStep answers={answers} onAnswer={setAnswers} onNext={() => goTo('trackingMethod')} onBack={goBack} />
+        <PivotStep answers={answers} onAnswer={setAnswers} onNext={goToNextFromPivot} onBack={goBack} />
       )}
 
       {screen === 'trackingMethod' && (
         <TrackingMethodStep
           answers={answers}
           onAnswer={setAnswers}
-          onNext={goToNextFromTrackingMethod}
+          onNext={() => goTo('rewardKano')}
           onBack={goBack}
         />
       )}
@@ -108,7 +105,7 @@ export function SurveyScreen() {
             const next = current.includes(v) ? current.filter((r) => r !== v) : [...current, v];
             setAnswers({ positiveReasons: next });
           }}
-          onNext={() => goTo('rewardKano')}
+          onNext={() => goTo('trackingMethod')}
           onBack={goBack}
         />
       )}
@@ -126,7 +123,7 @@ export function SurveyScreen() {
             const next = current.includes(v) ? current.filter((r) => r !== v) : [...current, v];
             setAnswers({ neutralReasons: next });
           }}
-          onNext={() => goTo('rewardKano')}
+          onNext={() => goTo('trackingMethod')}
           onBack={goBack}
         />
       )}
@@ -135,7 +132,7 @@ export function SurveyScreen() {
         <BranchNegativeStep
           answers={answers}
           onAnswer={setAnswers}
-          onNext={() => goTo('rewardKano')}
+          onNext={() => goTo('trackingMethod')}
           onBack={goBack}
         />
       )}

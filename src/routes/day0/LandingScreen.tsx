@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Paper, Stack } from '@mui/material';
+import { Box, Button, Paper, Stack, Typography } from '@mui/material';
 import { day0Tokens } from '../../theme/day0Theme';
 import { Day0Icon } from '../../components/day0/icons';
 
@@ -22,6 +22,30 @@ export function LandingScreen() {
           variant="outlined"
           sx={{ p: { xs: 3.5, sm: 4.5 }, borderRadius: '24px', borderColor: day0Tokens.mist, textAlign: 'center' }}
         >
+          <Typography
+            sx={{
+              display: 'inline-block',
+              fontSize: 11.5,
+              fontWeight: 800,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: day0Tokens.sunrise,
+              bgcolor: day0Tokens.sunriseSoft,
+              px: 1.5,
+              py: 0.6,
+              borderRadius: 99,
+              mb: 2,
+            }}
+          >
+            Coming soon
+          </Typography>
+          <Typography variant="h1" sx={{ fontSize: 26, lineHeight: 1.3, mb: 1.25 }}>
+            kiVo verifies your consistency and rewards it with real coins.
+          </Typography>
+          <Typography sx={{ color: day0Tokens.inkSoft, fontSize: 14.5, lineHeight: 1.55, mb: 3 }}>
+            We're building it now. Help shape it in 2 minutes.
+          </Typography>
+
           <Stack direction="row" gap={1} justifyContent="center" flexWrap="wrap" mb={3.5}>
             {[
               { icon: 'lock', label: 'Anonymous' },
@@ -57,7 +81,7 @@ export function LandingScreen() {
             onClick={() => navigate('/survey')}
             sx={{ py: 1.6, bgcolor: day0Tokens.ink, '&:hover': { bgcolor: day0Tokens.ink } }}
           >
-            Take the 2-minute survey
+            Share your input
           </Button>
         </Paper>
       </Box>
