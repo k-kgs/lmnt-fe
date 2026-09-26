@@ -104,7 +104,6 @@ export const STRUGGLE_OPTIONS = [
 export const TRACKING_TOOL_OPTIONS = [
   { v: 'app', t: 'A fitness or habit-tracking app', icon: 'smartphone' },
   { v: 'phone', t: "My phone's built-in tools (calendar, notes, reminders)", icon: 'calendar-check' },
-  { v: 'paper', t: 'Pen & paper journal', icon: 'notebook-pen' },
   { v: 'social', t: 'A social media or accountability group', icon: 'users' },
   { v: 'none', t: "I don't track. I just remember", icon: 'brain' },
   { v: 'other', t: 'Other', icon: 'plus-circle' },
